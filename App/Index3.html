@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HashmiTech | Royal Black Gold Cloud Empire</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg-main: #050505;
+      --bg-soft: #0d0d0d;
+      --bg-card: rgba(255, 215, 120, 0.06);
+      --bg-card-strong: rgba(255, 215, 120, 0.1);
+      --gold: #f5c76b;
+      --gold-soft: #d9a441;
+      --gold-bright: #ffde8a;
+      --gold-glow: rgba(245, 199, 107, 0.35);
+      --text: #f7f1e3;
+      --muted: #c6b998;
+      --border: rgba(245, 199, 107, 0.22);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(245, 199, 107, 0.08), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(245, 199, 107, 0.05), transparent 25%),
+        linear-gradient(135deg, #000000, #0b0b0b, #050505);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 223, 140, 0.025) 35%,
+        rgba(255, 223, 140, 0.05) 50%,
+        rgba(255, 223, 140, 0.025) 65%,
+        transparent 100%
+      );
+      transform: translateX(-120%);
+      animation: shimmer 10s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes shimmer {
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
+    .gold-particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .gold-particles span {
+      position: absolute;
+      display: block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255, 223, 140, 0.7);
+      box-shadow: 0 0 10px rgba(255, 223, 140, 0.4);
+      animation: rise linear infinite;
+    }
+
+    .gold-particles span:nth-child(1) { left: 8%; top: 100%; animation-duration: 16s; }
+    .gold-particles span:nth-child(2) { left: 16%; top: 100%; animation-duration: 13s; width: 4px; height: 4px; }
+    .gold-particles span:nth-child(3) { left: 28%; top: 100%; animation-duration: 17s; }
+    .gold-particles span:nth-child(4) { left: 40%; top: 100%; animation-duration: 12s; width: 5px; height: 5px; }
+    .gold-particles span:nth-child(5) { left: 52%; top: 100%; animation-duration: 18s; }
+    .gold-particles span:nth-child(6) { left: 66%; top: 100%; animation-duration: 15s; width: 4px; height: 4px; }
+    .gold-particles span:nth-child(7) { left: 78%; top: 100%; animation-duration: 19s; }
+    .gold-particles span:nth-child(8) { left: 90%; top: 100%; animation-duration: 14s; width: 5px; height: 5px; }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-110vh);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      width: min(1220px, 92%);
+      margin: auto;
+      padding: 28px 0 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 24px;
+      border-radius: 24px;
+      background: rgba(255, 215, 120, 0.04);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 18px;
+      z-index: 20;
+    }
+
+    .brand {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+    }
+
+    .brand span {
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 700;
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold-bright);
+    }
+
+    .nav-badge {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(245, 199, 107, 0.08);
+      border: 1px solid rgba(245, 199, 107, 0.25);
+      color: var(--gold-bright);
+      font-weight: 700;
+      box-shadow: 0 0 20px rgba(245, 199, 107, 0.08);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      margin-top: 30px;
+      align-items: stretch;
+    }
+
+    .glass-card {
+      background: rgba(255, 215, 120, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-left {
+      padding: 56px 44px;
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-left::before {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -90px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 199, 107, 0.16), transparent 70%);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      width: fit-content;
+      padding: 10px 18px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(245, 199, 107, 0.25);
+      background: rgba(245, 199, 107, 0.06);
+      color: var(--gold-bright);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      line-height: 1.02;
+      margin-bottom: 20px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .gold-text {
+      background: linear-gradient(90deg, #b88428, #f5c76b, #ffebae, #e0a73d, #f5c76b);
+      background-size: 300% 300%;
+      animation: goldFlow 8s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes goldFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.95;
+      max-width: 740px;
+      margin-bottom: 26px;
+    }
+
+    .typing-wrap {
+      min-height: 34px;
+      margin-bottom: 30px;
+      color: var(--gold-bright);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .cursor {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 15px 24px;
+      text-decoration: none;
+      border-radius: 16px;
+      font-weight: 800;
+      transition: 0.35s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      color: #0d0d0d;
+      background: linear-gradient(90deg, #d5a23f, #f5c76b, #ffe3a6);
+      box-shadow: 0 12px 30px rgba(245, 199, 107, 0.18);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(245, 199, 107, 0.24);
+    }
+
+    .btn-secondary {
+      color: var(--gold-bright);
+      border: 1px solid rgba(245, 199, 107, 0.22);
+      background: rgba(245, 199, 107, 0.04);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      background: rgba(245, 199, 107, 0.08);
+    }
+
+    .hero-right {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .status-card,
+    .terminal-card,
+    .mini-card,
+    .feature-card,
+    .cta-card {
+      border-radius: 24px;
+      background: rgba(255, 215, 120, 0.05);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .status-card {
+      padding: 22px;
+    }
+
+    .status-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: var(--gold-bright);
+    }
+
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--gold-bright);
+      border-radius: 50%;
+      box-shadow: 0 0 16px rgba(255, 223, 140, 0.7);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.65; }
+    }
+
+    .status-card p,
+    .mini-card p,
+    .feature-card p,
+    .cta-card p {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .terminal-card {
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.52);
+    }
+
+    .terminal-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .terminal-header span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .red { background: #ff5f57; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #28c840; }
+
+    .terminal-card code {
+      white-space: pre-line;
+      color: #ffe5a6;
+      display: block;
+      line-height: 1.95;
+      font-size: 0.94rem;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .mini-card {
+      padding: 18px;
+    }
+
+    .mini-card h3 {
+      font-size: 1.65rem;
+      margin-bottom: 8px;
+      color: var(--gold-bright);
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section-title {
+      font-size: 2.3rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: 0.35s ease;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -80px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 199, 107, 0.12), transparent 70%);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 223, 140, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      font-size: 1.5rem;
+      color: #0d0d0d;
+      background: linear-gradient(135deg, #e3b75d, #ffebae);
+      box-shadow: 0 10px 24px rgba(245, 199, 107, 0.14);
+    }
+
+    .feature-card h3 {
+      font-size: 1.24rem;
+      margin-bottom: 12px;
+      color: var(--gold-bright);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      padding: 24px;
+      text-align: center;
+      border-radius: 24px;
+      background: rgba(255, 215, 120, 0.05);
+      border: 1px solid rgba(245, 199, 107, 0.14);
+      box-shadow: var(--shadow);
+      transition: 0.35s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 223, 140, 0.24);
+    }
+
+    .stat h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      color: var(--gold-bright);
+    }
+
+    .stat p {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .cta-card {
+      margin-top: 32px;
+      padding: 42px 30px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(255, 215, 120, 0.08), rgba(255, 215, 120, 0.03));
+    }
+
+    .cta-card h2 {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+    }
+
+    .footer-line {
+      margin-top: 18px;
+      color: var(--gold-soft);
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1100px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .cards-3 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .stats-row {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero h1 {
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero-left,
+      .hero-right {
+        padding: 26px 20px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .cards-3,
+      .stats-row,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-title,
+      .cta-card h2 {
+        font-size: 1.8rem;
+      }
+      .hero-buttons {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="gold-particles">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="container">
+    <nav class="navbar">
+      <div class="brand">HashmiTech <span>Royal Cloud</span></div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#stack">Stack</a>
+        <a href="#creator">Creator</a>
+      </div>
+      <div class="nav-badge">Black Gold Live</div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-left glass-card reveal">
+        <div class="eyebrow">AWS • EC2 • Docker • Nginx • S3 • DevOps</div>
+        <h1>
+          Built Like An
+          <span class="gold-text">Empire</span>
+        </h1>
+        <p>
+          This is not a normal landing page. This is a black-gold premium cloud experience
+          deployed on <strong>Amazon EC2</strong>, powered by <strong>Docker</strong>,
+          delivered via <strong>Nginx</strong>, and prepared for <strong>S3 backup automation</strong>.
+          Ye project ambition, execution aur elite portfolio presentation ka combination hai.
+        </p>
+
+        <div class="typing-wrap">
+          <span id="typing-text"></span><span class="cursor">|</span>
+        </div>
+
+        <div class="hero-buttons">
+          <a href="#features" class="btn btn-primary">Enter the Empire</a>
+          <a href="#creator" class="btn btn-secondary">View Creator</a>
+        </div>
+      </div>
+
+      <div class="hero-right glass-card reveal">
+        <div class="status-card">
+          <div class="status-top">
+            <div class="live">
+              <span class="pulse-dot"></span>
+              <span>Deployment Status: Elite Live</span>
+            </div>
+            <strong style="color: var(--gold-bright);">AWS Active</strong>
+          </div>
+          <p>
+            Real-world cloud hosting, secure server handling, containerized deployment,
+            and backup-ready architecture in one premium portfolio build.
+          </p>
+        </div>
+
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <span class="red"></span>
+            <span class="yellow"></span>
+            <span class="green"></span>
+          </div>
+          <code>
+$ ssh ec2-user@aws-server
+$ docker build -t hashmitech-nginx .
+$ docker run -d -p 80:80 hashmitech-nginx
+$ aws s3 cp backup.tar.gz s3://hashmi-ec2-backups/
+✅ Royal deployment completed
+          </code>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <h3>EC2</h3>
+            <p>Luxury-grade cloud hosting on Amazon Linux 2023.</p>
+          </div>
+          <div class="mini-card">
+            <h3>Docker</h3>
+            <p>Modern deployment workflow with container precision.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h2 class="section-title">Royal Metrics</h2>
+      <div class="stats-row">
+        <div class="stat">
+          <h2>24/7</h2>
+          <p>Live hosted presence</p>
+        </div>
+        <div class="stat">
+          <h2>100%</h2>
+          <p>Hands-on engineering</p>
+        </div>
+        <div class="stat">
+          <h2>EC2</h2>
+          <p>Amazon Linux server</p>
+        </div>
+        <div class="stat">
+          <h2>S3</h2>
+          <p>Backup-ready workflow</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <h2 class="section-title reveal">Elite Features</h2>
+      <div class="cards-3">
+        <div class="feature-card reveal">
+          <div class="icon">☁</div>
+          <h3>Cloud Power</h3>
+          <p>
+            Amazon EC2 par deployed ye environment practical cloud hosting aur real infrastructure confidence show karta hai.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="icon">🐳</div>
+          <h3>Container Precision</h3>
+          <p>
+            Docker deployment workflow project ko professional, portable aur scalable banata hai.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="icon">🛡</div>
+          <h3>Secure Access</h3>
+          <p>
+            SSH keys, Linux permissions, aur controlled security group approach secure mindset ko reflect karti hai.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="icon">⚙</div>
+          <h3>Automation Vision</h3>
+          <p>
+            Is architecture ko backup scripts, cron automation, monitoring aur CI/CD ke sath expand kiya ja sakta hai.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="icon">📦</div>
+          <h3>S3 Resilience</h3>
+          <p>
+            S3-based backup strategy project ko recoverable aur operationally mature direction me le jati hai.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="icon">👑</div>
+          <h3>Royal Portfolio Presence</h3>
+          <p>
+            Ye deployment sirf chal nahi raha — ye tumhari skill ko black-gold premium presentation ke sath represent kar raha hai.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="stack">
+      <h2 class="section-title reveal">Technology Empire</h2>
+      <div class="cards-3">
+        <div class="feature-card reveal">
+          <div class="icon">🖥</div>
+          <h3>Amazon Linux 2023</h3>
+          <p>
+            Stable AWS-native OS foundation jo modern package management aur cloud operations ke liye bohat strong hai.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="icon">🌐</div>
+          <h3>Nginx Delivery</h3>
+          <p>
+            High-performance web serving layer jo project ko reliable aur fast experience deta hai.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="icon">🚀</div>
+          <h3>Deployment Excellence</h3>
+          <p>
+            Ye project learning se zyada hai — ye visible execution, troubleshooting aur infrastructure thinking ka proof hai.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-card reveal" id="creator">
+      <h2>Created by <span class="gold-text">Hamzah Hashmi</span></h2>
+      <p>
+        A future cloud and DevOps engineer building real AWS projects with practical execution,
+        elegant presentation, and a mindset focused on infrastructure, automation, and growth.
+      </p>
+      <div class="hero-buttons" style="justify-content:center;">
+        <a href="#top" class="btn btn-primary">Return to Top</a>
+      </div>
+      <div class="footer-line">
+        Powered by AWS EC2 • Docker • Nginx • Amazon S3 • Black-Gold Royal Design
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const words = [
+      "Hosted on Amazon EC2.",
+      "Delivered with Nginx precision.",
+      "Containerized through Docker.",
+      "Prepared for S3 backup automation.",
+      "Designed like a digital empire."
+    ];
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    const typingText = document.getElementById("typing-text");
+
+    function typeEffect() {
+      const currentWord = words[wordIndex];
+
+      if (!deleting) {
+        typingText.textContent = currentWord.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentWord.length) {
+          deleting = true;
+          setTimeout(typeEffect, 1400);
+          return;
+        }
+      } else {
+        typingText.textContent = currentWord.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+        }
+      }
+
+      setTimeout(typeEffect, deleting ? 45 : 85);
+    }
+
+    typeEffect();
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(item => observer.observe(item));
+  </script>
+</body>
+</html>
