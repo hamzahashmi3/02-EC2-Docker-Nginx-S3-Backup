@@ -19,11 +19,6 @@ This setup simulates a production-ready environment with security, automation, a
 * Implement retention policy for old backups
 * Restore application data from S3 backups
 
-## 🏗️ Architecture Diagram
-
-![Architecture](architecture/architecture-diagram.png)
-
-
 ## 🧠 How It Works
 
 ### Application Flow
